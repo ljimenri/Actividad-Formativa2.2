@@ -1,0 +1,64 @@
+package com.everis.data.controllers;
+
+import java.util.List;
+import java.util.Optional;
+
+import javax.validation.Valid;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.everis.data.models.Persona;
+import com.everis.data.repositories.PersonaRepository;
+import com.everis.data.services.PersonaService;
+
+@RestController
+public class ApiController {
+
+	@Autowired
+	PersonaService personaService;
+
+	@Autowired
+	PersonaRepository personaRepository;
+
+	@RequestMapping("/personas/save")
+	public String AgregarPersona(@PathVariable("persona") Persona Persona) {
+		personaService.guardarPersona(Persona);
+		return "Persona agregada";
+	}
+
+	@RequestMapping("/personas/eliminar/{id}")
+	public String eliminarPersonas(@PathVariable("id") Long id) {
+		personaService.deleteById(id);
+		return "Persona eliminada";
+	}
+
+	@RequestMapping("/api/personas/lista")
+	public List<Persona> listaPersonas() {
+		List<Persona> personasLista = personaService.allPersonas();
+		return personasLista;
+	}
+
+	@RequestMapping("/api/personas/editar")
+	public Optional<Persona> editarPersona(@PathVariable("id") Long id, Model model) {
+		Optional<Persona> persona = personaService.findById(id);
+		model.addAttribute("persona", persona);
+		return persona;
+	}
+
+	@RequestMapping("/api/personas/actualizar/")
+	public Persona actualizarPersona(@Valid @ModelAttribute("persona") Persona persona) {
+		return personaService.actualizarPersona(persona);
+	}
+
+	@RequestMapping("/a")
+	public String Ver() {
+
+		return "endpoint";
+	}
+
+}

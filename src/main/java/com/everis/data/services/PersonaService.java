@@ -39,8 +39,8 @@ public class PersonaService {
 	}
 
 	// ACTUALIZAR PERSONA POR ID
-	public void actualizarPersona(@Valid Persona persona) {
+	public Persona actualizarPersona(@Valid Persona persona) {
 
-		personaRepository.save(persona);
+		return personaRepository.save(persona);
 	}
 }
