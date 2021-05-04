@@ -27,17 +27,12 @@ public class ApiController {
 		return "Persona eliminada";
 	}
 	
-	@Autowired
-	PersonaService personaService;
-	
 	@RequestMapping("/api/personas/lista")
 	public List<Persona> listaPersonas(){
 		List<Persona> personasLista = personaService.ListAll();
 		return personasLista;
 	}
-	@Autowired
-	PersonaService personaService;
-	
+		
 	@RequestMapping("/api/personas/editar")
 	public Optional<Persona> editarPersona(@PathVariable("id") Long id,
 			Model model) {
